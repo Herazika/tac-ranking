@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>予約ページへ移動中…</title>
+<!-- welcomeメールCTAの計測用中継ページ（2026-08-17設置）。
+     GA4(G-DRLSHF02JK, プロパティ352516582)で utm を記録してから
+     予約ページ(app.herazika.com/herazika/signin)へ転送する。
+     app側signinはGTM headスニペット欠落でGA4不発火のため、この中継で代替計測。
+     app側が直ったらメールのリンクを直接URLに戻してこのページは廃止してよい。 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DRLSHF02JK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DRLSHF02JK');
+  setTimeout(function(){
+    location.replace('https://app.herazika.com/herazika/signin');
+  }, 400);
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=https://app.herazika.com/herazika/signin"></noscript>
+<style>body{font-family:-apple-system,"Hiragino Sans",sans-serif;color:#666;text-align:center;padding-top:40vh;margin:0}a{color:#0f218b}</style>
+</head>
+<body>
+予約ページへ移動しています…<br>
+<a href="https://app.herazika.com/herazika/signin">切り替わらない場合はこちら</a>
+</body>
+</html>
