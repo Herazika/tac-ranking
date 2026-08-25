@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>抽選結果｜TACオンライン自習室</title>
+<style>
+  :root{
+    --navy:#16294a; --indigo:#4a3cc4; --indigo-d:#3a2ea3; --tint:#eef3fd;
+    --bg:#ececec; --card:#fff; --ink:#1f2530; --body:#454b55; --sub:#7a808a;
+    --line:#e2e4e8; --hair:#f0f1f4; --orange:#e8663c; --tacred:#e2001a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+    background:var(--bg);color:var(--body);-webkit-font-smoothing:antialiased;
+    line-height:1.75;font-size:15px}
+  .wrap{max-width:600px;margin:0 auto;padding:0 14px 44px}
+  .appbar{margin:0 -14px 14px;background:var(--navy);color:#fff;padding:15px 20px;text-align:center}
+  .appbar .o{font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.62);font-weight:600}
+  .appbar h1{margin-top:7px;font-size:19px;font-weight:800;letter-spacing:.02em;line-height:1.45}
+  .appbar .p{margin-top:8px;font-size:12.5px;color:rgba(255,255,255,.86);font-weight:600}
+  .appbar .u{margin-top:5px;font-size:11px;color:rgba(255,255,255,.5)}
+
+  .preview{display:none;background:#fff4e5;border:1.5px solid #f0c48a;border-radius:10px;
+    padding:13px 16px;margin-bottom:12px;font-size:12.5px;font-weight:700;color:#8a5a12;
+    line-height:1.8}
+  .card{background:var(--card);border-radius:10px;padding:20px 18px;margin-bottom:12px;
+    box-shadow:0 1px 3px rgba(30,40,70,.07)}
+  .pill{display:inline-block;font-size:12px;font-weight:700;color:var(--indigo);
+    border:1.5px solid var(--indigo);border-radius:999px;padding:3px 14px;letter-spacing:.03em}
+  h2{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:800;color:var(--navy);
+    margin-bottom:15px;letter-spacing:.02em}
+  h2::before{content:"";width:4px;height:17px;background:var(--indigo);border-radius:2px}
+
+  .lead p{font-size:14px;line-height:1.95;color:var(--body)}
+  .lead p+p{margin-top:11px}
+  .sig{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair);font-size:12px;
+    color:var(--sub);line-height:1.8}
+  .sig b{color:var(--navy);font-weight:800;font-size:13px}
+
+  dl.def{display:grid;grid-template-columns:82px 1fr}
+  dl.def dt{padding:11px 0;font-size:12.5px;color:var(--sub);font-weight:700;
+    border-bottom:1px solid var(--hair)}
+  dl.def dd{padding:11px 0;font-size:14px;color:var(--ink);font-weight:600;
+    border-bottom:1px solid var(--hair);line-height:1.75}
+  dl.def dd small{display:block;font-size:12px;color:var(--sub);font-weight:500;margin-top:3px}
+  dl.def>*:nth-last-child(-n+2){border-bottom:0}
+  dl.terms{grid-template-columns:96px 1fr}
+  dl.terms dd{font-size:13px;font-weight:500;color:var(--body);line-height:1.85}
+
+  .note{margin-top:15px;padding:13px 15px;background:var(--tint);border-radius:8px;
+    font-size:12.5px;color:#3c4658;line-height:1.9}
+  .note b{color:var(--navy);font-weight:800}
+
+  .dlbox{background:var(--tint);border-radius:10px;padding:16px 18px;display:flex;
+    align-items:center;justify-content:space-between;gap:12px;margin-top:15px}
+  .dlbox .l{font-size:13px;font-weight:700;color:var(--navy)}
+  .dlbox .r{font-size:13px;color:var(--sub);font-weight:700;white-space:nowrap}
+  .dlbox .r b{font-size:30px;color:var(--indigo);font-weight:800;
+    font-variant-numeric:tabular-nums;margin:0 3px;letter-spacing:-.01em}
+
+  .tix{display:inline-flex;gap:3px;vertical-align:middle}
+  .tk{width:22px;height:15px;border-radius:3px;background:var(--indigo);position:relative;
+    display:block}
+  .tk::before,.tk::after{content:"";position:absolute;top:50%;transform:translateY(-50%);
+    width:5px;height:5px;border-radius:50%;background:var(--card)}
+  .tk::before{left:-2.5px}.tk::after{right:-2.5px}
+
+  table.lad{width:100%;border-collapse:collapse}
+  table.lad td{padding:14px 0;border-bottom:1px solid var(--hair);vertical-align:middle}
+  table.lad tr:last-child td{border-bottom:0}
+  table.lad td.c{font-size:14.5px;color:var(--ink);font-weight:700}
+  table.lad td.c small{display:block;font-size:12px;color:var(--sub);font-weight:500;
+    margin-top:4px;line-height:1.7}
+  table.lad td.v{text-align:right;white-space:nowrap;width:100px}
+  table.lad td.v .n{font-size:14px;font-weight:800;color:var(--indigo);margin-left:8px;
+    font-variant-numeric:tabular-nums}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .sc{background:var(--tint);border-radius:9px;padding:14px 6px 12px;text-align:center}
+  .sc .tix{justify-content:center;min-height:15px}
+  .sc .p{margin-top:10px;font-size:24px;font-weight:800;color:var(--indigo);
+    font-variant-numeric:tabular-nums;line-height:1.2}
+  .sc .p small{font-size:11.5px;font-weight:700;color:var(--sub);margin-left:1px}
+  .sc .k{margin-top:1px;font-size:11.5px;font-weight:700;color:var(--sub)}
+  .total{margin-top:11px;padding-top:13px;border-top:1px solid var(--hair);display:flex;
+    align-items:baseline;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;
+    color:var(--sub)}
+  .total .r{text-align:right;color:var(--sub);font-weight:600}
+  .total .r b{color:var(--navy);font-size:17px;font-weight:800;
+    font-variant-numeric:tabular-nums;margin:0 2px}
+
+  .search{width:100%;padding:12px 14px;font-size:14.5px;border:1.5px solid var(--line);
+    border-radius:8px;color:var(--ink);font-family:inherit;background:#fff}
+  .search:focus{outline:0;border-color:var(--indigo)}
+  .search::placeholder{color:#b5b9c0}
+  ul.board{list-style:none;margin-top:12px}
+  ul.board li{display:flex;align-items:center;gap:12px;padding:12px 2px;
+    border-bottom:1px solid var(--hair)}
+  .who{flex:1 1 auto;min-width:0}
+  .nick{font-size:14.5px;font-weight:700;color:var(--ink);overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .cat{font-size:12px;color:var(--sub);margin-top:1px;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .cnt{flex:0 0 auto;font-size:13.5px;font-weight:800;color:var(--indigo);
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  .more{margin-top:13px;font-size:12px;color:var(--sub);text-align:center;font-weight:600}
+
+  .wtop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    font-size:13px;color:var(--body);font-weight:700;margin-bottom:13px}
+  .wtop .w2{color:var(--sub);font-size:12px;font-weight:600;white-space:nowrap}
+  .wchips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:13px;font-weight:700;color:var(--navy);padding:7px 13px;
+    background:var(--tint);border-radius:999px}
+  footer{padding:18px 4px 0;font-size:11.5px;color:#8c9099;line-height:1.9;text-align:center}
+  footer b{display:block;color:var(--navy);font-weight:800;font-size:12.5px;margin-bottom:2px}
+
+  .cvbox{position:relative;margin:0 auto;max-width:460px}
+  canvas{width:100%;display:block;border-radius:9px;background:#fff;border:1px solid var(--line)}
+  .ptr{position:absolute;right:-2px;top:50%;transform:translateY(-50%);z-index:3;width:0;height:0;
+    border-top:9px solid transparent;border-bottom:9px solid transparent;
+    border-right:15px solid var(--indigo)}
+  .cvmeta{position:absolute;left:12px;top:11px;font-size:11.5px;color:var(--sub);line-height:1.75;
+    font-weight:600}
+  .cvmeta b{color:var(--navy);font-weight:800;font-variant-numeric:tabular-nums}
+  .legend{display:flex;justify-content:center;gap:16px;margin-top:13px;flex-wrap:wrap}
+  .lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--body);font-weight:600}
+  .lg i{width:13px;height:13px;border-radius:3px;display:block}
+  .lg small{color:var(--sub);font-weight:500}
+  .ctl{display:flex;gap:9px;justify-content:center;margin-top:16px}
+  .btn{font-family:inherit;font-size:14px;font-weight:800;padding:13px 26px;border-radius:999px;
+    cursor:pointer;border:0;background:var(--navy);color:#fff;letter-spacing:.03em}
+  .btn:disabled{opacity:.32;cursor:default}
+  .btn.sk{background:#fff;color:var(--body);border:1.5px solid var(--line);font-weight:700}
+  .flash{margin-top:15px;min-height:56px;display:flex;align-items:center;justify-content:center}
+  .flash .card2{opacity:0;transition:.3s;background:var(--tint);border-radius:9px;
+    padding:12px 24px;text-align:center}
+  .flash .card2.on{opacity:1}
+  .flash .card2 .n{font-size:20px;font-weight:800;color:var(--navy)}
+  .flash .card2 .c{margin-top:2px;font-size:12px;color:var(--sub);font-weight:600}
+  .flash .idle{font-size:12.5px;color:var(--sub);text-align:center;line-height:1.8}
+  ol.wl{list-style:none}
+  ol.wl li{display:flex;align-items:center;gap:12px;padding:12px 2px;
+    border-bottom:1px solid var(--hair);opacity:0;transform:translateY(6px);transition:.28s}
+  ol.wl li.on{opacity:1;transform:none}
+  ol.wl .no{flex:0 0 26px;height:26px;border-radius:50%;background:var(--tint);color:var(--indigo);
+    font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;
+    font-variant-numeric:tabular-nums}
+  ol.wl .tg{flex:0 0 auto;font-size:13.5px;font-weight:800;color:var(--indigo);
+    font-variant-numeric:tabular-nums}
+  .empty{padding:22px;text-align:center;color:var(--sub);font-size:13px;background:var(--tint);
+    border-radius:9px;font-weight:600}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="appbar">
+    <div class="o">TACオンライン自習室</div>
+    <h1 id="title"></h1>
+    <div class="p" id="term"></div>
+    <div class="u" id="pz"></div>
+  </div>
+
+  <div class="preview" id="notice"></div>
+  <div class="card">
+    <h2>抽選の記録</h2>
+    <div class="cvbox">
+      <canvas id="cv" width="880" height="620"></canvas>
+      <div class="ptr"></div>
+      <div class="cvmeta">対象 <b id="mp">0</b>名<br>抽選券 <b id="mt">0</b>枚</div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="ctl">
+      <button class="btn" id="go">抽選の様子を見る</button>
+      <button class="btn sk" id="sk">結果のみ表示</button>
+    </div>
+    <div class="flash" id="flash"><span class="idle">対象者全員のニックネームを、<br>抽選券の枚数に応じた幅で並べています</span></div>
+  </div>
+
+  <div class="card">
+    <h2>当選者</h2>
+    <ol class="wl" id="wl"></ol>
+    <div class="empty" id="empty">抽選をはじめると、こちらに表示されます</div>
+  </div>
+
+  <div class="card">
+    <h2>抽選について</h2>
+    <dl class="def terms">
+      <dt>抽選日時</dt><dd id="drawn"></dd>
+      <dt>抽選方法</dt><dd>抽選券1枚を1口として、当社システムにより無作為に抽選いたしました。一度当選された方は、以降の抽選の対象から外れます。</dd>
+      <dt>本ページ</dt><dd>締切後に確定した抽選結果を再生して表示しています。どなたがいつご覧になっても、同じ結果が表示されます。</dd>
+      <dt>掲載情報</dt><dd>アプリでご登録のニックネームのみを掲載しています。氏名・メールアドレス・会員番号は掲載しておりません。</dd>
+    </dl>
+    <div class="note">当選された方には、ご登録のメールアドレス宛に株式会社Herazikaよりご連絡いたします。<b>当選のご連絡にあたり、料金のお支払いや口座情報をお伺いすることは一切ございません。</b></div>
+  </div>
+
+  <div class="card">
+    <h2>次回のご案内</h2>
+    <dl class="def terms">
+      <dt>締切</dt><dd id="nextm"></dd>
+      <dt>参加方法</dt><dd>期間中にTACオンライン自習室で1回でも勉強されると、抽選券が1枚となり自動的に対象となります。お申し込みは不要です。</dd>
+    </dl>
+  </div>
+
+  <footer><b>株式会社Herazika</b>TACオンライン自習室 提供元</footer>
+</div>
+<script>
+/* tac_lottery_draw.py が本番DBから生成 */
+var DATA = {"people":[{"n":"てりろちゃん61","c":"回答を希望しない","t":1},{"n":"ねきめ","c":"社会保険労務士","t":2},{"n":"きこめ202685","c":"社会保険労務士","t":2},{"n":"ねきせっち","c":"年金検定","t":3},{"n":"にみひ＠2回目","c":"社会保険労務士","t":3},{"n":"れり＠専念","c":"賃貸不動産経営管理士","t":3},{"n":"らんとぴょん","c":"税理士","t":3},{"n":"のみあ＠2回目","c":"税理士","t":2},{"n":"たさてっち","c":"公認会計士","t":1},{"n":"きなも＠専念87","c":"回答を希望しない","t":3},{"n":"けみの＠専念","c":"税理士","t":3},{"n":"まこ丸71","c":"中小企業診断士","t":1},{"n":"もつちゃん","c":"社会保険労務士","t":1},{"n":"えん＠2回目","c":"公認会計士","t":3},{"n":"ねむた＠専念","c":"社会保険労務士","t":3},{"n":"みち2026","c":"税理士","t":2},{"n":"Enoki928","c":"税理士","t":1},{"n":"Sazan767","c":"回答を希望しない","t":1},{"n":"Tsugumi818","c":"公認会計士","t":1},{"n":"ちりっち","c":"建築士","t":3},{"n":"Rakko175","c":"社会保険労務士","t":1},{"n":"しきこっち82","c":"建築士","t":3},{"n":"らかもぴょん","c":"宅建士（宅地建物取引士）","t":3},{"n":"めのろ丸","c":"社会保険労務士","t":3},{"n":"きみちゃん","c":"賃貸不動産経営管理士","t":1},{"n":"あさちゃん72","c":"社会保険労務士","t":3},{"n":"ちはしぴょん","c":"米国公認会計士","t":1},{"n":"かみさ＠2回目","c":"税理士","t":1},{"n":"はさてさん","c":"社会保険労務士","t":3},{"n":"まんしさん26","c":"宅建士（宅地建物取引士）","t":3},{"n":"あら＠専念48","c":"簿記検定","t":1},{"n":"Nozomu7613","c":"公認会計士","t":3},{"n":"まこ丸71","c":"司法書士","t":1},{"n":"こは＠2回目","c":"電験三種・電験二種","t":1},{"n":"にらぴょん","c":"米国公認管理会計士","t":3},{"n":"ほすれちゃん","c":"マン管理／管理業務主任者","t":1},{"n":"あよ","c":"税理士","t":2},{"n":"まな","c":"実務講座","t":3},{"n":"ちさぴょん","c":"司法書士","t":1},{"n":"Hibino295","c":"社会保険労務士","t":3},{"n":"あん202631","c":"社会保険労務士","t":3},{"n":"せすかぴょん76","c":"公認会計士","t":3},{"n":"けらやちゃん","c":"社会保険労務士","t":3},{"n":"めつに","c":"行政書士","t":3},{"n":"ひみほ_","c":"税理士","t":3},{"n":"かかや","c":"情報処理","t":3},{"n":"みり＠2回目","c":"司法書士","t":3},{"n":"とと2026","c":"社会保険労務士","t":1},{"n":"ゆらっち","c":"公認会計士","t":3},{"n":"はよ_","c":"公認会計士","t":1},{"n":"せと2026","c":"社会保険労務士","t":2},{"n":"ちきや＠専念","c":"司法書士","t":3},{"n":"Toppa666","c":"公認会計士","t":1},{"n":"なのて2026","c":"社会保険労務士","t":3},{"n":"えよちゃん","c":"不動産鑑定士","t":2},{"n":"ゆよ_","c":"不動産鑑定士","t":1},{"n":"とよ","c":"不動産鑑定士","t":2},{"n":"きみき＠専念","c":"回答を希望しない","t":1},{"n":"めき＠専念","c":"税理士","t":1},{"n":"しきっち","c":"税理士","t":3},{"n":"わの丸","c":"社会保険労務士","t":2},{"n":"みる＠専念","c":"税理士","t":3},{"n":"さはぴょん","c":"社会保険労務士","t":3},{"n":"ちち_","c":"FP","t":1},{"n":"やさ＠専念","c":"司法書士","t":3},{"n":"しかちゃん56","c":"社会保険労務士","t":1},{"n":"かむ丸","c":"司法書士","t":3},{"n":"のすきぴょん","c":"社会保険労務士","t":3},{"n":"ひきにさん","c":"司法書士","t":2},{"n":"わきちゃん","c":"税理士","t":1},{"n":"やみちちゃん","c":"税理士","t":1},{"n":"Mikke69","c":"回答を希望しない","t":3},{"n":"もさめ202623","c":"建築士","t":3},{"n":"Yumeka511","c":"公認会計士","t":3},{"n":"たよみ＠専念","c":"中小企業診断士","t":1},{"n":"かなひさん40","c":"税理士","t":3},{"n":"そきほ丸64","c":"社会保険労務士","t":1},{"n":"みとっち","c":"税理士","t":3},{"n":"みりきさん","c":"米国公認会計士","t":3},{"n":"Nozomu7458","c":"行政書士","t":3},{"n":"のこ＠専念","c":"簿記検定","t":3},{"n":"のりさん","c":"情報処理","t":3},{"n":"せみた＠専念","c":"司法書士","t":3},{"n":"Kurot692","c":"行政書士","t":3},{"n":"ほむ丸","c":"弁理士","t":3},{"n":"とちのちゃん","c":"回答を希望しない","t":3},{"n":"えちそ丸","c":"建築士","t":1},{"n":"Yumeka202","c":"不動産鑑定士","t":1},{"n":"けみわぴょん","c":"回答を希望しない","t":3},{"n":"ひら19","c":"宅建士（宅地建物取引士）","t":3},{"n":"わつも202640","c":"公認会計士","t":2},{"n":"ゆす2026","c":"回答を希望しない","t":3},{"n":"Rakko791","c":"司法書士","t":3},{"n":"ゆなに2026","c":"中小企業診断士","t":3},{"n":"ねきしぴょん28","c":"中小企業診断士","t":1},{"n":"らの2026","c":"税理士","t":1},{"n":"らちっち","c":"FP","t":3},{"n":"ねか","c":"税理士","t":3},{"n":"せこさん","c":"税理士","t":3},{"n":"Nozomu7641","c":"司法書士","t":1},{"n":"Toppa247","c":"社会保険労務士","t":1},{"n":"わのほ丸","c":"税理士","t":1},{"n":"ける丸","c":"社会保険労務士","t":3},{"n":"ほらゆっち","c":"社会保険労務士","t":3},{"n":"しみさちゃん42","c":"社会保険労務士","t":3},{"n":"はのっち","c":"社会保険労務士","t":1},{"n":"Mikke69","c":"国家総合職・外務専門職","t":1},{"n":"あみみぴょん","c":"中小企業診断士","t":3},{"n":"みみち丸","c":"社会保険労務士","t":3},{"n":"えみ2026","c":"中小企業診断士","t":3},{"n":"わりぴょん","c":"宅建士（宅地建物取引士）","t":1},{"n":"にちぴょん","c":"税理士","t":3},{"n":"たみに_88","c":"建築士","t":3},{"n":"ひきちゃん","c":"行政書士","t":3},{"n":"ゆよ_","c":"パソコンスキル","t":3},{"n":"まのれさん","c":"中小企業診断士","t":3},{"n":"やるっち","c":"行政書士","t":1},{"n":"ろかけ","c":"宅建士（宅地建物取引士）","t":3},{"n":"さすなぴょん","c":"司法書士","t":1},{"n":"めむに2026","c":"不動産鑑定士","t":2},{"n":"かん2026","c":"司法書士","t":3},{"n":"きかろ","c":"中小企業診断士","t":3},{"n":"Kurot492","c":"社会保険労務士","t":2},{"n":"なきひっち","c":"社会保険労務士","t":3},{"n":"にはにさん","c":"税理士","t":3},{"n":"さらちゃん","c":"教員採用試験／教員資格認定試験","t":3},{"n":"ほら＠専念","c":"税理士","t":3},{"n":"せの丸","c":"不動産鑑定士","t":3},{"n":"れきか_13","c":"行政書士","t":1},{"n":"なみちゃん","c":"公認会計士","t":1},{"n":"ひさぴょん","c":"税理士","t":3},{"n":"えか_","c":"地方上級・市役所・国家一般職","t":3},{"n":"めよ2026","c":"税理士","t":3},{"n":"たんこちゃん28","c":"税理士","t":3},{"n":"Zumi295","c":"公認会計士","t":2},{"n":"こかこっち","c":"税理士","t":2},{"n":"さなもさん","c":"税理士","t":3},{"n":"めみぴょん","c":"税理士","t":1},{"n":"ろむぴょん","c":"中小企業診断士","t":1},{"n":"やのさん","c":"回答を希望しない","t":1},{"n":"しち丸","c":"行政書士","t":3},{"n":"Kurot123","c":"社会保険労務士","t":1},{"n":"そきま","c":"社会保険労務士","t":1},{"n":"てら2026","c":"中小企業診断士","t":1},{"n":"こつさん","c":"中小企業診断士","t":3},{"n":"えなさん","c":"簿記検定","t":3},{"n":"らよ","c":"社会保険労務士","t":1},{"n":"Nagiro997","c":"回答を希望しない","t":3},{"n":"かみに2026","c":"社会保険労務士","t":1},{"n":"ちとなさん","c":"社会保険労務士","t":3},{"n":"きるさん","c":"社会保険労務士","t":3},{"n":"Rakko741","c":"社会保険労務士","t":2},{"n":"まよき丸","c":"公認会計士","t":1},{"n":"たか＠専念","c":"地方上級・市役所・国家一般職","t":3},{"n":"めるそ丸","c":"司法書士","t":1},{"n":"らのね＠専念","c":"回答を希望しない","t":3},{"n":"まかちゃん","c":"簿記検定","t":3},{"n":"もんっち","c":"宅建士（宅地建物取引士）","t":3},{"n":"やんぴょん","c":"社会保険労務士","t":3},{"n":"ひこっち","c":"社会保険労務士","t":3},{"n":"けりめ","c":"建築士","t":3},{"n":"えとちゃん","c":"建築士","t":3},{"n":"かるたさん","c":"情報処理","t":3},{"n":"めるちゃん","c":"簿記検定","t":3},{"n":"やる＠2回目","c":"回答を希望しない","t":3},{"n":"せみ＠専念","c":"建築士","t":1},{"n":"まちに","c":"社会保険労務士","t":3},{"n":"はんせ_","c":"行政書士","t":3},{"n":"ろみけ2026","c":"回答を希望しない","t":2},{"n":"Wataru48","c":"宅建士（宅地建物取引士）","t":3},{"n":"せのな＠2回目","c":"情報処理","t":2},{"n":"につれ丸","c":"1級建築施工管理技士","t":2},{"n":"みらか丸","c":"建築士","t":3},{"n":"ろりけさん","c":"社会保険労務士","t":3},{"n":"なこ2026","c":"社会保険労務士","t":2},{"n":"ひさっち94","c":"行政書士","t":2},{"n":"Shirasu467","c":"行政書士","t":1},{"n":"ちん","c":"社会保険労務士","t":3},{"n":"はんきちゃん","c":"社会保険労務士","t":3},{"n":"のさ2026","c":"社会保険労務士","t":3},{"n":"さつとちゃん","c":"不動産鑑定士","t":1},{"n":"ほつ丸","c":"社会保険労務士","t":3},{"n":"こりかっち","c":"回答を希望しない","t":3},{"n":"にみそ丸","c":"社会保険労務士","t":3},{"n":"ひみやさん","c":"税理士","t":3},{"n":"ねきしぴょん28","c":"国家総合職・外務専門職","t":1},{"n":"らさまぴょん","c":"簿記検定","t":3},{"n":"にらら","c":"FASS_経理/財務スキル検定","t":3},{"n":"のき2026","c":"宅建士（宅地建物取引士）","t":3},{"n":"てのきさん","c":"宅建士（宅地建物取引士）","t":3},{"n":"にるは_","c":"宅建士（宅地建物取引士）","t":1},{"n":"こつさん","c":"建築士","t":2},{"n":"もみちゃん","c":"回答を希望しない","t":1},{"n":"まちさん","c":"社会保険労務士","t":3},{"n":"ことこぴょん","c":"不動産鑑定士","t":3},{"n":"えよやぴょん99","c":"宅建士（宅地建物取引士）","t":3},{"n":"らの＠専念","c":"行政書士","t":1},{"n":"なつとさん","c":"宅建士（宅地建物取引士）","t":1},{"n":"もるか＠専念","c":"宅建士（宅地建物取引士）","t":2},{"n":"らちっち","c":"税理士","t":3},{"n":"まよて32","c":"司法書士","t":1},{"n":"てとかぴょん","c":"回答を希望しない","t":3},{"n":"れは＠2回目","c":"社会保険労務士","t":3},{"n":"やのぴょん","c":"宅建士（宅地建物取引士）","t":3},{"n":"によささん","c":"情報処理","t":1},{"n":"のん_","c":"司法書士","t":3},{"n":"やとろ＠専念","c":"社会保険労務士","t":3},{"n":"あさっち","c":"実務講座","t":3},{"n":"かのて＠2回目","c":"宅建士（宅地建物取引士）","t":2},{"n":"らかちゃん98","c":"回答を希望しない","t":3},{"n":"ららた","c":"回答を希望しない","t":3},{"n":"Mikke230","c":"税理士","t":2},{"n":"きみ＠専念","c":"回答を希望しない","t":3},{"n":"さき_","c":"教員採用試験／教員資格認定試験","t":3},{"n":"にる＠専念","c":"建築士","t":3},{"n":"かさ丸","c":"回答を希望しない","t":1},{"n":"けりやっち","c":"社会保険労務士","t":3},{"n":"のりさん","c":"回答を希望しない","t":1},{"n":"とす＠2回目","c":"ビジネス実務法務検定試験®","t":1},{"n":"らき＠専念","c":"回答を希望しない","t":2},{"n":"らな202685","c":"宅建士（宅地建物取引士）","t":1},{"n":"Wataru435","c":"中小企業診断士","t":1},{"n":"ゆきこ＠専念","c":"社会保険労務士","t":3},{"n":"Hibino384","c":"回答を希望しない","t":3},{"n":"れみ＠2回目","c":"建築士","t":3},{"n":"ひみち2026","c":"公認会計士","t":3},{"n":"Bekka169","c":"弁理士","t":3},{"n":"らかけ＠専念","c":"通関士","t":3},{"n":"わさせ＠専念","c":"社会保険労務士","t":3},{"n":"あちと","c":"宅建士（宅地建物取引士）","t":3},{"n":"ろの_","c":"弁理士","t":3},{"n":"Mikke69","c":"不動産鑑定士","t":3},{"n":"せられ丸","c":"公認会計士","t":2},{"n":"あるせぴょん","c":"不動産鑑定士","t":3},{"n":"きさっち","c":"回答を希望しない","t":1},{"n":"たとちちゃん","c":"社会保険労務士","t":1},{"n":"けこけ_","c":"宅建士（宅地建物取引士）","t":1},{"n":"のささん","c":"マン管理／管理業務主任者","t":3},{"n":"もと＠専念","c":"簿記検定","t":2},{"n":"めき＠2回目","c":"不動産鑑定士","t":3},{"n":"えんちゃん","c":"回答を希望しない","t":3},{"n":"めみわぴょん","c":"教員採用試験／教員資格認定試験","t":1},{"n":"ちみっち","c":"税理士","t":1},{"n":"けるとさん","c":"社会保険労務士","t":3},{"n":"Wataru286","c":"情報処理","t":3},{"n":"もき","c":"公認会計士","t":3},{"n":"めなにぴょん","c":"回答を希望しない","t":3},{"n":"Sazan883","c":"宅建士（宅地建物取引士）","t":1},{"n":"しささん","c":"社会保険労務士","t":3},{"n":"ろす_","c":"社会保険労務士","t":1},{"n":"てむちゃん91","c":"社会保険労務士","t":2},{"n":"らとみ32","c":"回答を希望しない","t":1},{"n":"ちみちゃん","c":"情報処理","t":1},{"n":"はきにぴょん","c":"賃貸不動産経営管理士","t":2},{"n":"ゆん2026","c":"税理士","t":3},{"n":"ろりて丸","c":"社会保険労務士","t":2},{"n":"みとっち","c":"中小企業診断士","t":3},{"n":"ほんね＠2回目46","c":"中小企業診断士","t":3},{"n":"わよ","c":"司法書士","t":3},{"n":"によめっち","c":"不動産鑑定士","t":1},{"n":"しとたっち","c":"不動産鑑定士","t":2},{"n":"れかま＠2回目","c":"建築士","t":3},{"n":"やんっち","c":"司法書士","t":1},{"n":"かきっち","c":"教員採用試験／教員資格認定試験","t":1},{"n":"あらさん","c":"社会保険労務士","t":2},{"n":"わち_","c":"宅建士（宅地建物取引士）","t":1},{"n":"らつ丸","c":"回答を希望しない","t":1},{"n":"あの＠2回目","c":"情報処理","t":1},{"n":"もはな＠2回目15","c":"公認会計士","t":1},{"n":"たこた丸","c":"マン管理／管理業務主任者","t":2},{"n":"たりな2026","c":"簿記検定","t":3},{"n":"あちひぴょん","c":"回答を希望しない","t":3},{"n":"けみせ_","c":"回答を希望しない","t":3},{"n":"しはひさん","c":"米国公認会計士","t":3},{"n":"きみわさん","c":"建築士","t":3},{"n":"れさっち","c":"中小企業診断士","t":2},{"n":"ろの＠専念","c":"不動産鑑定士","t":3},{"n":"あよさん","c":"不動産鑑定士","t":1},{"n":"えかねさん","c":"建築士","t":3},{"n":"ねこ","c":"国家総合職・外務専門職","t":1},{"n":"めはて2026","c":"社会保険労務士","t":2},{"n":"ひはもっち","c":"社会保険労務士","t":2},{"n":"はこっち","c":"建築士","t":1},{"n":"かよひ丸","c":"宅建士（宅地建物取引士）","t":2},{"n":"やは＠専念","c":"社会保険労務士","t":1},{"n":"ねなひさん","c":"司法書士","t":1},{"n":"かなえ2026","c":"米国公認管理会計士","t":1},{"n":"ひむ_","c":"建築士","t":1},{"n":"こち_","c":"宅建士（宅地建物取引士）","t":1},{"n":"せきろっち","c":"税理士","t":3},{"n":"めこほっち","c":"弁理士","t":1},{"n":"とす＠2回目","c":"ビジネス実務法務検定試験®","t":3},{"n":"ののさん","c":"建築士","t":1},{"n":"にさか_","c":"地方上級・市役所・国家一般職","t":3},{"n":"らみ＠2回目","c":"宅建士（宅地建物取引士）","t":3},{"n":"ひなえちゃん","c":"建築士","t":1},{"n":"はきけっち34","c":"建築士","t":1},{"n":"まきら_","c":"不動産鑑定士","t":2},{"n":"もちひさん","c":"地方上級・市役所・国家一般職","t":3},{"n":"しすゆ_","c":"不動産鑑定士","t":1},{"n":"やのさん","c":"宅建士（宅地建物取引士）","t":3},{"n":"たつ2026","c":"危険物取扱者","t":2},{"n":"きらか＠専念","c":"簿記検定","t":3},{"n":"しよらぴょん","c":"建築士","t":1},{"n":"ゆる丸","c":"公認会計士","t":2},{"n":"わらえ＠2回目","c":"回答を希望しない","t":3},{"n":"にむぴょん","c":"税理士","t":2},{"n":"につれ丸","c":"地方上級・市役所・国家一般職","t":1},{"n":"ののぴょん91","c":"経理実務・税法実務・経営法務","t":1},{"n":"めかけ丸","c":"情報処理","t":3},{"n":"たさちゃん16","c":"社会保険労務士","t":2},{"n":"Rakko86","c":"情報処理","t":1},{"n":"てらぴょん","c":"社会保険労務士","t":3},{"n":"ゆさたっち","c":"社会保険労務士","t":3},{"n":"につれ丸","c":"回答を希望しない","t":1},{"n":"とと＠2回目","c":"社会保険労務士","t":1},{"n":"のんっち","c":"建築士","t":3},{"n":"みみあぴょん","c":"税理士","t":3},{"n":"なつ","c":"社会保険労務士","t":3},{"n":"たこ_","c":"宅建士（宅地建物取引士）","t":3},{"n":"たみた","c":"資金業務取扱責任者","t":3},{"n":"しみ20268","c":"公認会計士","t":1},{"n":"ねさ＠2回目","c":"簿記検定","t":3},{"n":"はつ丸","c":"回答を希望しない","t":3},{"n":"しみは丸","c":"社会保険労務士","t":3},{"n":"ひかなさん","c":"弁理士","t":3},{"n":"けきさん29","c":"回答を希望しない","t":1},{"n":"らのめっち","c":"地方上級・市役所・国家一般職","t":3},{"n":"かのこ2026","c":"建築士","t":3},{"n":"しかか丸","c":"建築士","t":3},{"n":"あむさん77","c":"税理士","t":1},{"n":"ねの＠専念","c":"司法書士","t":3},{"n":"やな＠専念","c":"社会保険労務士","t":3},{"n":"ゆりれ_77","c":"建築士","t":3},{"n":"こか＠専念","c":"建築士","t":3},{"n":"けつっち84","c":"建築士","t":3},{"n":"もるっち","c":"不動産鑑定士","t":1},{"n":"まよっち16","c":"地方上級・市役所・国家一般職","t":1},{"n":"Enoki80","c":"税理士","t":3},{"n":"せす＠2回目83","c":"建築士","t":3},{"n":"ときけっち76","c":"宅建士（宅地建物取引士）","t":3},{"n":"みかとちゃん","c":"回答を希望しない","t":3},{"n":"ひむ","c":"回答を希望しない","t":1},{"n":"けみ丸","c":"資金業務取扱責任者","t":3},{"n":"ひのはっち","c":"地方上級・市役所・国家一般職","t":3},{"n":"ゆさ＠2回目","c":"建築士","t":1},{"n":"けらか＠2回目","c":"回答を希望しない","t":2},{"n":"ことし28","c":"TOEIC® L&R TEST","t":3},{"n":"てちわ2026","c":"米国公認管理会計士","t":2},{"n":"そのてぴょん","c":"税理士","t":1},{"n":"ききめさん","c":"社会保険労務士","t":2},{"n":"せの＠2回目","c":"簿記検定","t":2},{"n":"てこそちゃん","c":"地方上級・市役所・国家一般職","t":1},{"n":"ゆち202647","c":"税理士","t":2},{"n":"やみさん","c":"建築士","t":2},{"n":"しな2026","c":"司法書士","t":1},{"n":"ますみ","c":"公認会計士","t":1},{"n":"しんたちゃん14","c":"宅建士（宅地建物取引士）","t":2},{"n":"やのさん","c":"地方上級・市役所・国家一般職","t":2},{"n":"かこねさん","c":"簿記検定","t":2},{"n":"えこも＠2回目","c":"公認会計士","t":2},{"n":"めよ","c":"社会保険労務士","t":2},{"n":"ゆすあ丸","c":"公認会計士","t":2},{"n":"ほみれ＠専念","c":"不動産鑑定士","t":2},{"n":"なみ","c":"不動産鑑定士","t":2},{"n":"らき_","c":"地方上級・市役所・国家一般職","t":2},{"n":"によ","c":"不動産鑑定士","t":2},{"n":"けちちゃん","c":"中小企業診断士","t":2},{"n":"なんぴょん50","c":"税理士","t":1},{"n":"わのてっち2","c":"不動産鑑定士","t":2},{"n":"みむや202655","c":"不動産鑑定士","t":2},{"n":"はるし_","c":"税理士","t":2},{"n":"やみさん93","c":"司法書士","t":2},{"n":"ひき_","c":"回答を希望しない","t":2},{"n":"れとぴょん","c":"回答を希望しない","t":2},{"n":"えな丸","c":"司法書士","t":2},{"n":"もか2026","c":"不動産鑑定士","t":1},{"n":"なるぴょん","c":"不動産鑑定士","t":2},{"n":"Sazan648","c":"税理士","t":2},{"n":"やとそ丸","c":"司法書士","t":2},{"n":"のん_","c":"回答を希望しない","t":2},{"n":"えな丸","c":"税理士","t":2},{"n":"のかかぴょん90","c":"建築士","t":2},{"n":"たき＠専念","c":"社会保険労務士","t":2},{"n":"ろこ2026","c":"国家総合職・外務専門職","t":2}],"winners":[93,332,209,22,75,309,283,248,269,105],"dist":[[3,195],[2,75],[1,115]],"meta":{"title":"9月スタートダッシュキャンペーン","badge":"抽選結果","term":"8月17日（月）〜 8月23日（日） の抽選","prize":"当選 10名さま／Amazonギフト券 500円","drawn":"8月23日（日）23時59分 締切後","next":"8月30日（日）23時59分"},"notice":"確認用のサンプルです。ニックネームはすべてダミーに置き換えており、この抽選は実施していません。"};
+var PEOPLE=DATA.people, WINNERS=DATA.winners, DIST=DATA.dist, META=DATA.meta;
+function rnd(){return Math.random()}
+var $=function(id){return document.getElementById(id)};
+(function(){var nt=(typeof D!=='undefined'?D:DATA).notice;
+  if(nt){var e=$('notice');e.textContent=nt;e.style.display='block';}})();
+/* 抽選券の枚数を示す3階調。アプリのインディゴを濃度で展開 */
+var TIER={3:{c:'#c9c3f0',d:'#9a91d8'},2:{c:'#e0ddf6',d:'#bcb6e6'},1:{c:'#eef3fd',d:'#cdd6e8'}};
+
+$('title').textContent=META.title||'抽選結果';
+$('term').textContent=META.term;
+$('pz').textContent=META.prize;
+$('drawn').textContent=META.drawn||'';
+$('nextm').textContent=META.next;
+
+var active=PEOPLE.map(function(p,i){return i}), bounds={}, TOTAL=0;
+function layout(){var t=0;active.forEach(function(i){t+=PEOPLE[i].t});TOTAL=t;
+  var acc=0;bounds={};
+  active.forEach(function(i){var w=PEOPLE[i].t/t*Math.PI*2;bounds[i]=[acc,acc+w];acc+=w;});
+  $('mp').textContent=active.length.toLocaleString();
+  $('mt').textContent=t.toLocaleString();}
+layout();
+$('legend').innerHTML=DIST.map(function(d){
+  return '<span class="lg"><i style="background:'+TIER[d[0]].c+'"></i>'+d[0]+'枚 <small>'+
+         d[1].toLocaleString()+'名</small></span>'}).join('');
+
+var cv=$('cv'), ctx=cv.getContext('2d');
+var W=880,H=620,PX=W-6,PY=H/2,R0=290,ZMAX=34,theta=0,zoom=1;
+function draw(){
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; ctx.fillRect(0,0,W,H);
+  var R=R0*zoom, cx=PX-R, cy=PY;
+  var half = zoom<1.6 ? Math.PI : Math.min(Math.PI,(H*0.62)/R);
+  for(var k=0;k<active.length;k++){
+    var idx=active[k], b=bounds[idx], a0=b[0]+theta, a1=b[1]+theta;
+    var m=((a0+a1)/2)%(Math.PI*2); if(m>Math.PI)m-=Math.PI*2; if(m<-Math.PI)m+=Math.PI*2;
+    if(Math.abs(m)>half+0.05) continue;
+    var p=PEOPLE[idx], tt=TIER[p.t];
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,R,a0,a1); ctx.closePath();
+    ctx.fillStyle=tt.c; ctx.fill();
+    if(zoom>2.2){ctx.strokeStyle=tt.d;ctx.lineWidth=Math.min(1.4,zoom*.05);ctx.stroke();}
+    var band=R*(b[1]-b[0]);
+    if(band>13){
+      ctx.save(); ctx.translate(cx,cy); ctx.rotate((a0+a1)/2);
+      ctx.fillStyle='#1f2530'; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.font='700 '+Math.min(band*0.56,26).toFixed(0)+
+        'px -apple-system,"Hiragino Sans",sans-serif';
+      ctx.fillText(p.n, R-16, 0); ctx.restore();
+    }
+  }
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.strokeStyle='#cdd6e8'; ctx.lineWidth=1.6; ctx.stroke();
+  if(zoom<3){ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#cdd6e8';ctx.lineWidth=1.6;ctx.stroke();}
+}
+draw();
+
+var idx=0, busy=false;
+function ease(x){return 1-Math.pow(1-x,4)}
+function spin(cb){
+  var b=bounds[WINNERS[idx]], pad=(b[1]-b[0])*0.2;
+  var land=b[0]+pad+rnd()*((b[1]-b[0])-pad*2);
+  var start=theta, cur=((start%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+  var need=((-land-cur)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+  var end=start+Math.PI*2*3+need, DUR=3000, t0=performance.now();
+  (function f(now){var p=Math.min(1,(now-t0)/DUR);
+    theta=start+(end-start)*ease(p);
+    zoom = p<.45 ? 1 : 1+(ZMAX-1)*ease((p-.45)/.55);
+    draw(); if(p<1) requestAnimationFrame(f); else cb();})(t0);
+}
+function reveal(){
+  var p=PEOPLE[WINNERS[idx]];
+  $('flash').innerHTML='<div class="card2"><div class="n">'+p.n+'</div><div class="c">'+
+    p.c+'　抽選券 '+p.t+'枚</div></div>';
+  setTimeout(function(){var c=document.querySelector('.flash .card2');if(c)c.classList.add('on')},20);
+  $('empty').style.display='none';
+  var li=document.createElement('li');
+  li.innerHTML='<span class="no">'+(idx+1)+'</span><span class="who"><span class="nick">'+p.n+
+    '</span><span class="cat">'+p.c+'</span></span><span class="tg">'+p.t+'枚</span>';
+  $('wl').appendChild(li); setTimeout(function(){li.classList.add('on')},30);
+  active.splice(active.indexOf(WINNERS[idx]),1); layout(); idx++;
+}
+function step(){ if(idx>=WINNERS.length){done();return}
+  spin(function(){reveal(); setTimeout(function(){zoom=1;draw();setTimeout(step,300)},1200)}); }
+function done(){busy=false;zoom=1;draw();
+  $('go').disabled=true; $('go').textContent='抽選終了';
+  $('sk').style.display='none';
+  $('flash').innerHTML='<span class="idle">'+WINNERS.length+'名の当選が確定しました</span>';}
+$('go').onclick=function(){if(busy)return;busy=true;this.disabled=true;
+  this.textContent='抽選中';step()};
+$('sk').onclick=function(){busy=true;$('go').disabled=true;
+  while(idx<WINNERS.length) reveal(); done()};
+</script>
+</body>
+</html>
