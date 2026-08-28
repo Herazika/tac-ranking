@@ -212,7 +212,7 @@
     </div>
     <div class="lead" id="lead"></div>
     <div class="dlstrip">
-      <span class="l">今週のしめきり<small id="d-when"></small></span>
+      <span class="l"><span id="d-label"></span><small id="d-when"></small></span>
       <span class="r">あと<b id="d-days"></b>日</span>
     </div>
   </div>
@@ -287,7 +287,7 @@
 </div>
 <script>
 /* tac_lottery_page.py が本番DBから生成 */
-var D = {"notice":"","updated":"08/28 16:25","week_label":"今週 8/31（月） 〜 9/6（日）","days_left":9,"deadline":"9月6日（日）23:59まで","announce":"9月7日（月）","prize":"Amazonギフト券 500円","winners_count":10,"participants":0,"tickets":0,"dist":[0,0,0],"lookup":{},"salt":"herazika-lottery-2026-08-31","iters":120000,"last":null,"campaign":{"title":"9月の学習応援キャンペーン","badge":"期間限定キャンペーン","period":"2026年8月31日（月）〜 9月27日（日）","rounds":4,"rounds_note":"月曜〜日曜を1週として全4週","first_draw":"9月6日（日）","lead":"日ごろのご愛顧への感謝を込めた、9月かぎりの特別企画です。学習を始めたばかりの方も、試験が近い方も、どなたも対象になります。"}};
+var D = {"notice":"","updated":"08/28 16:28","week_label":"今週 8/31（月） 〜 9/6（日）","days_left":3,"state":"before","start_date":"8月31日（月）","deadline":"9月6日（日）23:59まで","announce":"9月7日（月）","prize":"Amazonギフト券 500円","winners_count":10,"participants":0,"tickets":0,"dist":[0,0,0],"lookup":{},"salt":"herazika-lottery-2026-08-31","iters":120000,"last":null,"campaign":{"title":"9月の学習応援キャンペーン","badge":"期間限定キャンペーン","period":"2026年8月31日（月）〜 9月27日（日）","rounds":4,"rounds_note":"月曜〜日曜を1週として全4週","first_draw":"9月6日（日）","lead":"日ごろのご愛顧への感謝を込めた、9月かぎりの特別企画です。学習を始めたばかりの方も、試験が近い方も、どなたも対象になります。"}};
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var $=function(id){return document.getElementById(id)};
@@ -303,7 +303,13 @@ $('lead').textContent=C.lead;
 $('t-period').textContent=C.period+'（全'+C.rounds+'回）';
 $('t-prize').textContent='毎回'+D.winners_count+'名さまに'+D.prize+'（期間中あわせて '+
   (D.winners_count*C.rounds)+'名さま）';
-$('d-when').textContent=D.deadline;
+if(D.state==='before'){
+  $('d-label').textContent='キャンペーン開始まで';
+  $('d-when').textContent=D.start_date+'スタート';
+}else{
+  $('d-label').textContent='今週のしめきり';
+  $('d-when').textContent=D.deadline;
+}
 $('d-days').textContent=D.days_left;
 
 if(D.participants>0){
