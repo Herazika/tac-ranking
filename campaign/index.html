@@ -123,11 +123,11 @@
     box-shadow:0 1px 3px rgba(30,40,70,.07)}
   .hero .top{padding:22px 18px 20px;text-align:center;background:var(--tint)}
   .hero .cap{font-size:12.5px;font-weight:700;color:var(--navy);letter-spacing:.02em}
-  .hero .big{margin-top:9px;font-size:17px;font-weight:800;color:var(--navy);line-height:1.5}
-  .hero .big b{display:block;font-size:29px;font-weight:800;color:var(--indigo);
-    letter-spacing:-.01em;margin-top:3px}
-  .hero .big em{font-style:normal;font-size:34px;color:var(--indigo);
-    font-variant-numeric:tabular-nums;margin:0 2px}
+  .hero .big{margin-top:7px;font-size:16px;font-weight:800;color:var(--navy);line-height:1.5}
+  .hero .big em{display:block;font-style:normal;font-size:42px;font-weight:900;
+    color:var(--indigo);letter-spacing:.02em;line-height:1.15;margin-bottom:2px}
+  .hero .big b{display:block;font-size:27px;font-weight:800;color:var(--indigo);
+    letter-spacing:-.01em;margin-top:4px}
   .hero .free{display:inline-block;margin-top:14px;font-size:11.5px;font-weight:700;
     color:var(--indigo);background:#fff;border:1.5px solid var(--indigo);border-radius:999px;
     padding:4px 14px}
@@ -208,7 +208,7 @@
       <div class="st"><div class="no">2</div>
         <div class="tx">抽選券が<br>もらえる</div><div class="sb">続けるほど増える</div></div>
       <div class="st"><div class="no">3</div>
-        <div class="tx">日曜に抽選</div><div class="sb">当選者にメール</div></div>
+        <div class="tx">毎週日曜に<br>抽選</div><div class="sb">当選者にメール</div></div>
     </div>
     <div class="lead" id="lead"></div>
     <div class="dlstrip">
@@ -287,7 +287,7 @@
 </div>
 <script>
 /* tac_lottery_page.py が本番DBから生成 */
-var D = {"notice":"","updated":"08/28 16:22","week_label":"今週 8/31（月） 〜 9/6（日）","days_left":9,"deadline":"9月6日（日）23:59まで","announce":"9月7日（月）","prize":"Amazonギフト券 500円","winners_count":10,"participants":0,"tickets":0,"dist":[0,0,0],"lookup":{},"salt":"herazika-lottery-2026-08-31","iters":120000,"last":null,"campaign":{"title":"9月の学習応援キャンペーン","badge":"期間限定キャンペーン","period":"2026年8月31日（月）〜 9月27日（日）","rounds":4,"rounds_note":"月曜〜日曜を1週として全4週","first_draw":"9月6日（日）","lead":"日ごろのご愛顧への感謝を込めた、9月かぎりの特別企画です。学習を始めたばかりの方も、試験が近い方も、どなたも対象になります。"}};
+var D = {"notice":"","updated":"08/28 16:25","week_label":"今週 8/31（月） 〜 9/6（日）","days_left":9,"deadline":"9月6日（日）23:59まで","announce":"9月7日（月）","prize":"Amazonギフト券 500円","winners_count":10,"participants":0,"tickets":0,"dist":[0,0,0],"lookup":{},"salt":"herazika-lottery-2026-08-31","iters":120000,"last":null,"campaign":{"title":"9月の学習応援キャンペーン","badge":"期間限定キャンペーン","period":"2026年8月31日（月）〜 9月27日（日）","rounds":4,"rounds_note":"月曜〜日曜を1週として全4週","first_draw":"9月6日（日）","lead":"日ごろのご愛顧への感謝を込めた、9月かぎりの特別企画です。学習を始めたばかりの方も、試験が近い方も、どなたも対象になります。"}};
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var $=function(id){return document.getElementById(id)};
@@ -298,7 +298,7 @@ $('title').textContent=C.title;
 $('period').textContent=C.period;
 $('upd').textContent='最終更新　'+D.updated;
 if(D.notice){$('notice').textContent=D.notice;$('notice').style.display='block';}
-$('prizeline').innerHTML='毎週 <em>'+D.winners_count+'</em> 名さまに<b>'+esc(D.prize)+'</b>';
+$('prizeline').innerHTML='<em>毎週</em>'+D.winners_count+'名さまに<b>'+esc(D.prize)+'</b>';
 $('lead').textContent=C.lead;
 $('t-period').textContent=C.period+'（全'+C.rounds+'回）';
 $('t-prize').textContent='毎回'+D.winners_count+'名さまに'+D.prize+'（期間中あわせて '+
